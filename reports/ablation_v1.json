@@ -1,0 +1,349 @@
+{
+  "selection_metric": "accuracy - 0.08 * log_loss - 0.15 * brier",
+  "note": "Ablations disable Optuna to isolate each switch under the same base config.",
+  "best_variant": "no_swap",
+  "ranked": [
+    {
+      "name": "no_swap",
+      "model_path": "artifacts/ablations/no_swap/model.ckpt",
+      "metrics_path": "reports/ablations/no_swap/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 770
+      },
+      "config": {
+        "home_away_swap_augmentation": false,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 11,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.4634880071042482,
+        "test": {
+          "accuracy": 0.6185567010309279,
+          "log_loss": 0.9247817475371034,
+          "brier": 0.5405743608247423
+        },
+        "aux_class_test": {
+          "accuracy": 0.5773195876288659,
+          "log_loss": 0.9294238686561584,
+          "brier": 0.5500419106896541
+        },
+        "test_goal_mae": 0.970386803150177
+      }
+    },
+    {
+      "name": "baseline",
+      "model_path": "artifacts/ablations/baseline/model.ckpt",
+      "metrics_path": "reports/ablations/baseline/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.39174502443807757,
+        "test": {
+          "accuracy": 0.5618556701030928,
+          "log_loss": 1.0051278324106288,
+          "brier": 0.598002793814433
+        },
+        "aux_class_test": {
+          "accuracy": 0.5360824742268041,
+          "log_loss": 0.9833029508590698,
+          "brier": 0.584076492770712
+        },
+        "test_goal_mae": 0.9666887521743774
+      }
+    },
+    {
+      "name": "no_era_scaling",
+      "model_path": "artifacts/ablations/no_era_scaling/model.ckpt",
+      "metrics_path": "reports/ablations/no_era_scaling/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": false,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 11,
+        "best_epoch": 2,
+        "stopped_epoch": 14,
+        "score": 0.38889588842272194,
+        "test": {
+          "accuracy": 0.5567010309278351,
+          "log_loss": 0.9881605119840166,
+          "brier": 0.5916820103092785
+        },
+        "aux_class_test": {
+          "accuracy": 0.5515463917525774,
+          "log_loss": 0.9810914993286133,
+          "brier": 0.5827370850803852
+        },
+        "test_goal_mae": 0.9519134163856506
+      }
+    },
+    {
+      "name": "no_aux_class",
+      "model_path": "artifacts/ablations/no_aux_class/model.ckpt",
+      "metrics_path": "reports/ablations/no_aux_class/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.0,
+        "calibration_loss_weight": 0.0,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.3877838393205506,
+        "test": {
+          "accuracy": 0.5567010309278351,
+          "log_loss": 0.9968021180292006,
+          "brier": 0.5944868144329897
+        },
+        "aux_class_test": {
+          "accuracy": 0.3711340206185567,
+          "log_loss": 1.225698471069336,
+          "brier": 0.7403733944302803
+        },
+        "test_goal_mae": 0.9762696623802185
+      }
+    },
+    {
+      "name": "no_recency",
+      "model_path": "artifacts/ablations/no_recency/model.ckpt",
+      "metrics_path": "reports/ablations/no_recency/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 0.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.3871055412132657,
+        "test": {
+          "accuracy": 0.5515463917525774,
+          "log_loss": 0.9726796330300559,
+          "brier": 0.5775098659793815
+        },
+        "aux_class_test": {
+          "accuracy": 0.520618556701031,
+          "log_loss": 0.9783286452293396,
+          "brier": 0.582061650941337
+        },
+        "test_goal_mae": 0.944107711315155
+      }
+    }
+  ],
+  "results": [
+    {
+      "name": "baseline",
+      "model_path": "artifacts/ablations/baseline/model.ckpt",
+      "metrics_path": "reports/ablations/baseline/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.39174502443807757,
+        "test": {
+          "accuracy": 0.5618556701030928,
+          "log_loss": 1.0051278324106288,
+          "brier": 0.598002793814433
+        },
+        "aux_class_test": {
+          "accuracy": 0.5360824742268041,
+          "log_loss": 0.9833029508590698,
+          "brier": 0.584076492770712
+        },
+        "test_goal_mae": 0.9666887521743774
+      }
+    },
+    {
+      "name": "no_swap",
+      "model_path": "artifacts/ablations/no_swap/model.ckpt",
+      "metrics_path": "reports/ablations/no_swap/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 770
+      },
+      "config": {
+        "home_away_swap_augmentation": false,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 11,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.4634880071042482,
+        "test": {
+          "accuracy": 0.6185567010309279,
+          "log_loss": 0.9247817475371034,
+          "brier": 0.5405743608247423
+        },
+        "aux_class_test": {
+          "accuracy": 0.5773195876288659,
+          "log_loss": 0.9294238686561584,
+          "brier": 0.5500419106896541
+        },
+        "test_goal_mae": 0.970386803150177
+      }
+    },
+    {
+      "name": "no_recency",
+      "model_path": "artifacts/ablations/no_recency/model.ckpt",
+      "metrics_path": "reports/ablations/no_recency/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 0.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.3871055412132657,
+        "test": {
+          "accuracy": 0.5515463917525774,
+          "log_loss": 0.9726796330300559,
+          "brier": 0.5775098659793815
+        },
+        "aux_class_test": {
+          "accuracy": 0.520618556701031,
+          "log_loss": 0.9783286452293396,
+          "brier": 0.582061650941337
+        },
+        "test_goal_mae": 0.944107711315155
+      }
+    },
+    {
+      "name": "no_era_scaling",
+      "model_path": "artifacts/ablations/no_era_scaling/model.ckpt",
+      "metrics_path": "reports/ablations/no_era_scaling/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": false,
+        "class_loss_weight": 0.25,
+        "calibration_loss_weight": 0.05,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 11,
+        "best_epoch": 2,
+        "stopped_epoch": 14,
+        "score": 0.38889588842272194,
+        "test": {
+          "accuracy": 0.5567010309278351,
+          "log_loss": 0.9881605119840166,
+          "brier": 0.5916820103092785
+        },
+        "aux_class_test": {
+          "accuracy": 0.5515463917525774,
+          "log_loss": 0.9810914993286133,
+          "brier": 0.5827370850803852
+        },
+        "test_goal_mae": 0.9519134163856506
+      }
+    },
+    {
+      "name": "no_aux_class",
+      "model_path": "artifacts/ablations/no_aux_class/model.ckpt",
+      "metrics_path": "reports/ablations/no_aux_class/model_metrics.json",
+      "training_rows": {
+        "base": 770,
+        "augmented": 1453
+      },
+      "config": {
+        "home_away_swap_augmentation": true,
+        "recency_half_life_tournaments": 6.0,
+        "era_goal_scaling": true,
+        "class_loss_weight": 0.0,
+        "calibration_loss_weight": 0.0,
+        "optuna_trials": 0
+      },
+      "best": {
+        "seed": 37,
+        "best_epoch": 4,
+        "stopped_epoch": 16,
+        "score": 0.3877838393205506,
+        "test": {
+          "accuracy": 0.5567010309278351,
+          "log_loss": 0.9968021180292006,
+          "brier": 0.5944868144329897
+        },
+        "aux_class_test": {
+          "accuracy": 0.3711340206185567,
+          "log_loss": 1.225698471069336,
+          "brier": 0.7403733944302803
+        },
+        "test_goal_mae": 0.9762696623802185
+      }
+    }
+  ]
+}

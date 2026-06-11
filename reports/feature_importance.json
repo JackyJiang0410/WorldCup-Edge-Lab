@@ -1,0 +1,1444 @@
+{
+  "model_path": "artifacts/v1/model.ckpt",
+  "baseline": {
+    "accuracy": 0.6134020618556701,
+    "log_loss": 0.907146982090407,
+    "brier": 0.5342818659793814,
+    "score": 0.4606880233915304
+  },
+  "features": [
+    {
+      "feature": "experience_log_diff",
+      "delta_score": 0.04377247581294069,
+      "delta_accuracy": 0.04123711340206193,
+      "delta_log_loss": 0.014456005651447779,
+      "delta_brier": 0.009192546391752598,
+      "permuted": {
+        "accuracy": 0.5721649484536082,
+        "log_loss": 0.9216029877418548,
+        "brier": 0.543474412371134,
+        "score": 0.41691554757858973
+      }
+    },
+    {
+      "feature": "squad_peak_age_share_diff",
+      "delta_score": 0.028794545249494985,
+      "delta_accuracy": 0.02577319587628868,
+      "delta_log_loss": 0.017458200927964684,
+      "delta_brier": 0.01083128865979388,
+      "permuted": {
+        "accuracy": 0.5876288659793815,
+        "log_loss": 0.9246051830183717,
+        "brier": 0.5451131546391753,
+        "score": 0.43189347814203544
+      }
+    },
+    {
+      "feature": "home_elo_rating_avg",
+      "delta_score": 0.027684888782510075,
+      "delta_accuracy": 0.02577319587628868,
+      "delta_log_loss": 0.010185523441169742,
+      "delta_brier": 0.007312340206185541,
+      "permuted": {
+        "accuracy": 0.5876288659793815,
+        "log_loss": 0.9173325055315767,
+        "brier": 0.541594206185567,
+        "score": 0.43300313460902035
+      }
+    },
+    {
+      "feature": "gd_avg_pair_avg",
+      "delta_score": 0.026700726889244464,
+      "delta_accuracy": 0.02577319587628868,
+      "delta_log_loss": 0.006567436631018331,
+      "delta_brier": 0.0026809072164949432,
+      "permuted": {
+        "accuracy": 0.5876288659793815,
+        "log_loss": 0.9137144187214253,
+        "brier": 0.5369627731958764,
+        "score": 0.43398729650228596
+      }
+    },
+    {
+      "feature": "squad_30plus_share_pair_avg",
+      "delta_score": 0.022494464862398533,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.010657157429465491,
+      "delta_brier": 0.00682223711340213,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9178041395198725,
+        "brier": 0.5411041030927836,
+        "score": 0.4381935585291319
+      }
+    },
+    {
+      "feature": "squad_prior_wc_goals_mean_diff",
+      "delta_score": 0.022205343449477055,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.01096401605660613,
+      "delta_brier": 0.004731103092783462,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9181109981470131,
+        "brier": 0.5390129690721649,
+        "score": 0.43848267994205337
+      }
+    },
+    {
+      "feature": "squad_gk_share_diff",
+      "delta_score": 0.021728311956943858,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.00724369971952854,
+      "delta_brier": 0.0035350618556702074,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9143906818099355,
+        "brier": 0.5378169278350516,
+        "score": 0.43895971143458656
+      }
+    },
+    {
+      "feature": "squad_prior_wc_goals_mean_pair_avg",
+      "delta_score": 0.021257082261266713,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.003887709966863828,
+      "delta_brier": 0.0021833917525772017,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9110346920572708,
+        "brier": 0.5364652577319586,
+        "score": 0.4394309411302637
+      }
+    },
+    {
+      "feature": "squad_prior_wc_squad_share_pair_avg",
+      "delta_score": 0.02123444146787723,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.002936465513412423,
+      "delta_brier": 0.0025397835051546025,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9100834476038194,
+        "brier": 0.536821649484536,
+        "score": 0.4394535819236532
+      }
+    },
+    {
+      "feature": "year_num",
+      "delta_score": 0.017897099439866115,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.01492835640038681,
+      "delta_brier": 0.008259422680412354,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9220753384907938,
+        "brier": 0.5425412886597938,
+        "score": 0.4427909239516643
+      }
+    },
+    {
+      "feature": "squad_prior_wc_squad_mean_pair_avg",
+      "delta_score": 0.016917757079617235,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.007598883598307515,
+      "delta_brier": 0.005639525773195819,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9147458656887145,
+        "brier": 0.5399213917525773,
+        "score": 0.4437702663119132
+      }
+    },
+    {
+      "feature": "gf_avg_diff",
+      "delta_score": 0.016909525669788927,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.008604483243494943,
+      "delta_brier": 0.005048329896907289,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.915751465333902,
+        "brier": 0.5393301958762887,
+        "score": 0.4437784977217415
+      }
+    },
+    {
+      "feature": "home_fifa_points",
+      "delta_score": 0.01678172116795995,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.007212732383002907,
+      "delta_brier": 0.004938567010309369,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9143597144734099,
+        "brier": 0.5392204329896908,
+        "score": 0.44390630222357047
+      }
+    },
+    {
+      "feature": "squad_avg_age_diff",
+      "delta_score": 0.016302193781588703,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.005276816599753764,
+      "delta_brier": 0.0027742061855671185,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9124237986901608,
+        "brier": 0.5370560721649486,
+        "score": 0.4443858296099417
+      }
+    },
+    {
+      "feature": "all_recent_friendly_form_diff",
+      "delta_score": 0.016286265701119018,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.00588110476914061,
+      "delta_brier": 0.0023457319587629755,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9130280868595476,
+        "brier": 0.5366275979381444,
+        "score": 0.4444017576904114
+      }
+    },
+    {
+      "feature": "draw_rate_diff",
+      "delta_score": 0.015963050221347197,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.0033471548286942987,
+      "delta_brier": 0.00154240206185563,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9104941369191013,
+        "brier": 0.5358242680412371,
+        "score": 0.4447249731701832
+      }
+    },
+    {
+      "feature": "away_fifa_points",
+      "delta_score": 0.01588148110323878,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.002276741883265987,
+      "delta_brier": 0.0015694948453608415,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.909423723973673,
+        "brier": 0.5358513608247423,
+        "score": 0.44480654228829164
+      }
+    },
+    {
+      "feature": "squad_age_std_pair_avg",
+      "delta_score": 0.01584951410380986,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.0029764069677249427,
+      "delta_brier": 0.0009832268041237713,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.910123389058132,
+        "brier": 0.5352650927835052,
+        "score": 0.44483850928772056
+      }
+    },
+    {
+      "feature": "away_elo_rating_avg",
+      "delta_score": 0.015685114712370773,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.0008510924097884232,
+      "delta_brier": 0.0010207319587628438,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9079980745001954,
+        "brier": 0.5353025979381443,
+        "score": 0.44500290867915965
+      }
+    },
+    {
+      "feature": "squad_df_share_diff",
+      "delta_score": 0.015669699662029357,
+      "delta_accuracy": 0.015463917525773252,
+      "delta_log_loss": 0.0007291710330973311,
+      "delta_brier": 0.0009829896907217472,
+      "permuted": {
+        "accuracy": 0.5979381443298969,
+        "log_loss": 0.9078761531235043,
+        "brier": 0.5352648556701032,
+        "score": 0.44501832372950106
+      }
+    },
+    {
+      "feature": "era_team_goal_rate",
+      "delta_score": 0.013798319212593835,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.019628242734741508,
+      "delta_brier": 0.012791876288659854,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9267752248251485,
+        "brier": 0.5470737422680413,
+        "score": 0.4468897041789366
+      }
+    },
+    {
+      "feature": "squad_prior_wc_starts_mean_pair_avg",
+      "delta_score": 0.012815173745358954,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.015178937280903249,
+      "delta_brier": 0.008610536082474196,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9223259193713103,
+        "brier": 0.5428924020618556,
+        "score": 0.44787284964617147
+      }
+    },
+    {
+      "feature": "away_host",
+      "delta_score": 0.011964297243135802,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.009082201363938003,
+      "delta_brier": 0.006189618556701082,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.916229183454345,
+        "brier": 0.5404714845360825,
+        "score": 0.4487237261483946
+      }
+    },
+    {
+      "feature": "squad_prior_wc_apps_share_pair_avg",
+      "delta_score": 0.0119335940130334,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.01112280531755494,
+      "delta_brier": 0.0048966082474227735,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.918269787407962,
+        "brier": 0.5391784742268042,
+        "score": 0.448754429378497
+      }
+    },
+    {
+      "feature": "fifa_missing_any",
+      "delta_score": 0.011906874313584115,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.010019691806397724,
+      "delta_brier": 0.005306804123711428,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9171666738968047,
+        "brier": 0.5395886701030929,
+        "score": 0.4487811490779463
+      }
+    },
+    {
+      "feature": "squad_avg_age_pair_avg",
+      "delta_score": 0.011671714041593062,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.006303184540529805,
+      "delta_brier": 0.005721206185566929,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9134501666309368,
+        "brier": 0.5400030721649484,
+        "score": 0.44901630934993736
+      }
+    },
+    {
+      "feature": "stage_type",
+      "delta_score": 0.011539935606482421,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.008184491472781441,
+      "delta_brier": 0.003839319587628842,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9153314735631884,
+        "brier": 0.5381211855670103,
+        "score": 0.449148087785048
+      }
+    },
+    {
+      "feature": "squad_prior_wc_apps_mean_diff",
+      "delta_score": 0.011530589142766279,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.006345192892823981,
+      "delta_brier": 0.004757969072164969,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.913492174983231,
+        "brier": 0.5390398350515464,
+        "score": 0.44915743424876414
+      }
+    },
+    {
+      "feature": "all_recent_form_weighted_diff",
+      "delta_score": 0.011479459598686848,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.006621440859872152,
+      "delta_brier": 0.004269773195876292,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9137684229502792,
+        "brier": 0.5385516391752577,
+        "score": 0.4492085637928436
+      }
+    },
+    {
+      "feature": "away_squad_avg_age",
+      "delta_score": 0.011399626953108366,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.008181960625193274,
+      "delta_brier": 0.002905278350515461,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9153289427156003,
+        "brier": 0.5371871443298969,
+        "score": 0.44928839643842206
+      }
+    },
+    {
+      "feature": "squad_mf_share_pair_avg",
+      "delta_score": 0.01127606260786268,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.0068751833714773,
+      "delta_brier": 0.0027784639175257864,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9140221654618843,
+        "brier": 0.5370603298969072,
+        "score": 0.44941196078366774
+      }
+    },
+    {
+      "feature": "loss_rate_diff",
+      "delta_score": 0.010985054672276118,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.003892635723037996,
+      "delta_brier": 0.0024291030927835466,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.911039617813445,
+        "brier": 0.536710969072165,
+        "score": 0.4497029687192543
+      }
+    },
+    {
+      "feature": "away_confederation",
+      "delta_score": 0.010962720289018124,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.003386097684890288,
+      "delta_brier": 0.0025503608247423593,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9105330797752973,
+        "brier": 0.5368322268041238,
+        "score": 0.4497253031025123
+      }
+    },
+    {
+      "feature": "fifa_rank_diff",
+      "delta_score": 0.010902492814816311,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.003212493948088535,
+      "delta_brier": 0.002241432989690706,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9103594760384955,
+        "brier": 0.5365232989690721,
+        "score": 0.4497855305767141
+      }
+    },
+    {
+      "feature": "fifa_points_diff",
+      "delta_score": 0.010876641395822728,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.0029575470869580567,
+      "delta_brier": 0.002205061855670043,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9101045291773651,
+        "brier": 0.5364869278350515,
+        "score": 0.4498113819957077
+      }
+    },
+    {
+      "feature": "venue_country",
+      "delta_score": 0.010873986307950168,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.003059261839066907,
+      "delta_brier": 0.0021331134020619036,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9102062439294739,
+        "brier": 0.5364149793814433,
+        "score": 0.44981403708358025
+      }
+    },
+    {
+      "feature": "win_rate_diff",
+      "delta_score": 0.010813355554847526,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.003961796239716375,
+      "delta_brier": 0.0012475567010309385,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9111087783301234,
+        "brier": 0.5355294226804124,
+        "score": 0.4498746678366829
+      }
+    },
+    {
+      "feature": "all_recent_gd_weighted_diff",
+      "delta_score": 0.010774181468094002,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.0025793495367411046,
+      "delta_brier": 0.0017237010309278933,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9097263316271481,
+        "brier": 0.5360055670103093,
+        "score": 0.4499138419234364
+      }
+    },
+    {
+      "feature": "all_recent_form_5_diff",
+      "delta_score": 0.010619317555282226,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.0017344333585519456,
+      "delta_brier": 0.0011418969072166663,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.908881415448959,
+        "brier": 0.5354237628865981,
+        "score": 0.4500687058362482
+      }
+    },
+    {
+      "feature": "gf_avg_pair_avg",
+      "delta_score": 0.010484580999694793,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.0003078359497917793,
+      "delta_brier": 0.0010045051546391237,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9074548180401988,
+        "brier": 0.5352863711340206,
+        "score": 0.45020344239183563
+      }
+    },
+    {
+      "feature": "away_elo_rating",
+      "delta_score": 0.010418922966345279,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.001535808986531162,
+      "delta_brier": -8.813402061857989e-05,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9086827910769382,
+        "brier": 0.5341937319587629,
+        "score": 0.45026910042518514
+      }
+    },
+    {
+      "feature": "home_elo_rank",
+      "delta_score": 0.010387174029785617,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": 0.00019454650633909942,
+      "delta_brier": 0.0004155463917526747,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9073415285967461,
+        "brier": 0.5346974123711341,
+        "score": 0.4503008493617448
+      }
+    },
+    {
+      "feature": "squad_gk_share_pair_avg",
+      "delta_score": 0.010292584020269058,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.001573253870349678,
+      "delta_brier": 0.0007277731958762468,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9055737282200573,
+        "brier": 0.5350096391752577,
+        "score": 0.45039543937126136
+      }
+    },
+    {
+      "feature": "squad_prior_wc_squad_mean_diff",
+      "delta_score": 0.010268926463446848,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.001014031320317632,
+      "delta_brier": 0.0002718041237113056,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9061329507700894,
+        "brier": 0.5345536701030927,
+        "score": 0.4504190969280836
+      }
+    },
+    {
+      "feature": "home_elo_rating",
+      "delta_score": 0.010220590039006161,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.00010665801757991922,
+      "delta_brier": -0.0005343711340206614,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9070403240728271,
+        "brier": 0.5337474948453608,
+        "score": 0.45046743335252426
+      }
+    },
+    {
+      "feature": "squad_fw_share_pair_avg",
+      "delta_score": 0.01019445542270564,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.0007606538656660389,
+      "delta_brier": -0.00035980412371128256,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.906386328224741,
+        "brier": 0.5339220618556701,
+        "score": 0.4504935679688248
+      }
+    },
+    {
+      "feature": "all_h2h_win_rate_diff",
+      "delta_score": 0.010125565572768835,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.0006440901342062988,
+      "delta_brier": -0.0008812371134020447,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9065028919562007,
+        "brier": 0.5334006288659794,
+        "score": 0.4505624578187616
+      }
+    },
+    {
+      "feature": "all_recent_ga_10_diff",
+      "delta_score": 0.010122452066401333,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.00019241618029419705,
+      "delta_brier": -0.001142886597938264,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9069545659101128,
+        "brier": 0.5331389793814432,
+        "score": 0.4505655713251291
+      }
+    },
+    {
+      "feature": "all_recent_competitive_form_diff",
+      "delta_score": 0.010086591682615331,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.002103557575558135,
+      "delta_brier": -0.00036268041237119686,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9050434245148489,
+        "brier": 0.5339191855670102,
+        "score": 0.4506014317089151
+      }
+    },
+    {
+      "feature": "squad_prior_wc_apps_share_diff",
+      "delta_score": 0.009826233975450127,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.003109111389348884,
+      "delta_brier": -0.0015621030927834845,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.9040378707010581,
+        "brier": 0.532719762886598,
+        "score": 0.4508617894160803
+      }
+    },
+    {
+      "feature": "ga_avg_pair_avg",
+      "delta_score": 0.009734005839603654,
+      "delta_accuracy": 0.010309278350515538,
+      "delta_log_loss": -0.004047691180213975,
+      "delta_brier": -0.0016763814432989577,
+      "permuted": {
+        "accuracy": 0.6030927835051546,
+        "log_loss": 0.903099290910193,
+        "brier": 0.5326054845360825,
+        "score": 0.45095401755192677
+      }
+    },
+    {
+      "feature": "squad_peak_age_share_pair_avg",
+      "delta_score": 0.006941362165599652,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.010640048977210048,
+      "delta_brier": 0.006236793814432984,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.917787031067617,
+        "brier": 0.5405186597938144,
+        "score": 0.45374666122593077
+      }
+    },
+    {
+      "feature": "all_h2h_played",
+      "delta_score": 0.006613495593460417,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.009377161413098412,
+      "delta_brier": 0.004724556701031002,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9165241435035054,
+        "brier": 0.5390064226804124,
+        "score": 0.45407452779807
+      }
+    },
+    {
+      "feature": "squad_prior_wc_squad_share_diff",
+      "delta_score": 0.006411008796116502,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.005922262013310253,
+      "delta_brier": 0.005217257731958802,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9130692441037173,
+        "brier": 0.5394991237113402,
+        "score": 0.4542770145954139
+      }
+    },
+    {
+      "feature": "experience_log_total",
+      "delta_score": 0.006222470895147714,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.006288134900685471,
+      "delta_brier": 0.0037652061855670826,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9134351169910925,
+        "brier": 0.5380470721649485,
+        "score": 0.4544655524963827
+      }
+    },
+    {
+      "feature": "all_recent_form_20_diff",
+      "delta_score": 0.006141168861910906,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.005823882681100234,
+      "delta_brier": 0.0034707938144330486,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9129708647715072,
+        "brier": 0.5377526597938145,
+        "score": 0.4545468545296195
+      }
+    },
+    {
+      "feature": "elo_rank_diff",
+      "delta_score": 0.006132372313094991,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.005981374274510842,
+      "delta_brier": 0.0033281546391752403,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9131283563649178,
+        "brier": 0.5376100206185567,
+        "score": 0.45455565107843543
+      }
+    },
+    {
+      "feature": "squad_fw_share_diff",
+      "delta_score": 0.006125839840615599,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.006824421976764583,
+      "delta_brier": 0.002834979381443392,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9139714040671716,
+        "brier": 0.5371168453608248,
+        "score": 0.4545621835509148
+      }
+    },
+    {
+      "feature": "all_recent_form_10_diff",
+      "delta_score": 0.005840024700787927,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.003416636079434987,
+      "delta_brier": 0.0027470309278350147,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.910563618169842,
+        "brier": 0.5370288969072164,
+        "score": 0.4548479986907425
+      }
+    },
+    {
+      "feature": "away_elo_rank",
+      "delta_score": 0.0058079725777648306,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.004455269335460366,
+      "delta_brier": 0.0019794123711340816,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9116022514258674,
+        "brier": 0.5362612783505155,
+        "score": 0.4548800508137656
+      }
+    },
+    {
+      "feature": "fifa_points_pair_avg",
+      "delta_score": 0.005793690689926523,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.004179806304492328,
+      "delta_brier": 0.002031113402061857,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9113267883948993,
+        "brier": 0.5363129793814433,
+        "score": 0.4548943327016039
+      }
+    },
+    {
+      "feature": "elo_rank_pair_avg",
+      "delta_score": 0.005670947312819308,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0028475115133327344,
+      "delta_brier": 0.0019233814432988439,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9099944936037397,
+        "brier": 0.5362052474226803,
+        "score": 0.4550170760787111
+      }
+    },
+    {
+      "feature": "home_host",
+      "delta_score": 0.005653335524871628,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.003088150246460919,
+      "delta_brier": 0.0016776288659793304,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9102351323368679,
+        "brier": 0.5359594948453608,
+        "score": 0.4550346878666588
+      }
+    },
+    {
+      "feature": "squad_u23_share_pair_avg",
+      "delta_score": 0.005641450749964416,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0022801897869252352,
+      "delta_brier": 0.002029309278350433,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9094271718773322,
+        "brier": 0.5363111752577319,
+        "score": 0.455046572641566
+      }
+    },
+    {
+      "feature": "host_diff",
+      "delta_score": 0.0055360021396898,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0030336285502438054,
+      "delta_brier": 0.0009244845360826259,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9101806106406508,
+        "brier": 0.5352063505154641,
+        "score": 0.4551520212518406
+      }
+    },
+    {
+      "feature": "away_fifa_rank",
+      "delta_score": 0.005400567484494856,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0022077378860809738,
+      "delta_brier": 0.00046206185567010394,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.909354719976488,
+        "brier": 0.5347439278350515,
+        "score": 0.45528745590703557
+      }
+    },
+    {
+      "feature": "h2h_played_total",
+      "delta_score": 0.005349311835195492,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0013704958780855758,
+      "delta_brier": 0.0005668865979382431,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9085174779684926,
+        "brier": 0.5348487525773197,
+        "score": 0.45533871155633493
+      }
+    },
+    {
+      "feature": "squad_df_share_pair_avg",
+      "delta_score": 0.005180266228296038,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": -0.0006841399298057604,
+      "delta_brier": 0.0005357216494845662,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9064628421606012,
+        "brier": 0.534817587628866,
+        "score": 0.4555077571632344
+      }
+    },
+    {
+      "feature": "squad_mf_share_diff",
+      "delta_score": 0.00514573791855133,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.00017261315714800496,
+      "delta_brier": -0.00015140206185570992,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.907319595247555,
+        "brier": 0.5341304639175257,
+        "score": 0.4555422854729791
+      }
+    },
+    {
+      "feature": "squad_age_std_diff",
+      "delta_score": 0.0050861545423095955,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.00021947688196133353,
+      "delta_brier": -0.0005736185567010166,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9073664589723683,
+        "brier": 0.5337082474226804,
+        "score": 0.4556018688492208
+      }
+    },
+    {
+      "feature": "ga_avg_diff",
+      "delta_score": 0.0050615218115071525,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.00019962187064082038,
+      "delta_brier": -0.0007272474226803771,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9073466039610478,
+        "brier": 0.533554618556701,
+        "score": 0.45562650158002327
+      }
+    },
+    {
+      "feature": "elo_rating_avg_diff",
+      "delta_score": 0.005041988043473666,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 4.0366007335812526e-05,
+      "delta_brier": -0.0007725360824741845,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9071873480977428,
+        "brier": 0.5335093298969072,
+        "score": 0.45564603534805675
+      }
+    },
+    {
+      "feature": "fifa_rank_pair_avg",
+      "delta_score": 0.004771533257757032,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": -0.0033127737110288935,
+      "delta_brier": -0.0007872268041236863,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9038342083793781,
+        "brier": 0.5334946391752577,
+        "score": 0.4559164901337734
+      }
+    },
+    {
+      "feature": "all_recent_gd_10_diff",
+      "delta_score": 0.004650705225940244,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": -0.0030396125107995386,
+      "delta_brier": -0.0017384329896907857,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9041073695796075,
+        "brier": 0.5325434329896906,
+        "score": 0.4560373181655902
+      }
+    },
+    {
+      "feature": "gd_avg_diff",
+      "delta_score": 0.00464533723799021,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": -0.002271332205537213,
+      "delta_brier": -0.002183969072165004,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9048756498848698,
+        "brier": 0.5320978969072164,
+        "score": 0.4560426861535402
+      }
+    },
+    {
+      "feature": "squad_30plus_share_diff",
+      "delta_score": 0.0013260319671327125,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.008498634125240212,
+      "delta_brier": 0.004307608247422712,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9156456162156472,
+        "brier": 0.5385894742268041,
+        "score": 0.4593619914243977
+      }
+    },
+    {
+      "feature": "all_recent_gf_10_diff",
+      "delta_score": 0.0011165674092831757,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.006709695708822183,
+      "delta_brier": 0.003865278350515422,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9138566777992292,
+        "brier": 0.5381471443298969,
+        "score": 0.45957145598224725
+      }
+    },
+    {
+      "feature": "home_confederation",
+      "delta_score": 0.0007428931907468295,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.005094515399798327,
+      "delta_brier": 0.0022355463917526075,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9122414974902053,
+        "brier": 0.536517412371134,
+        "score": 0.4599451302007836
+      }
+    },
+    {
+      "feature": "all_recent_form_10_pair_avg",
+      "delta_score": 0.0006937856284012778,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.003617185045736715,
+      "delta_brier": 0.002696072164948493,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9107641671361437,
+        "brier": 0.5369779381443299,
+        "score": 0.45999423776312914
+      }
+    },
+    {
+      "feature": "elo_rating_pair_avg",
+      "delta_score": 0.0005071331384625677,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.0029258523751106713,
+      "delta_brier": 0.0018204329896907012,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9100728344655177,
+        "brier": 0.5361022989690721,
+        "score": 0.46018089025306785
+      }
+    },
+    {
+      "feature": "elo_missing_any",
+      "delta_score": 0.0004884639079671405,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.002973852973299662,
+      "delta_brier": 0.0016703711340205762,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9101208350637067,
+        "brier": 0.535952237113402,
+        "score": 0.4601995594835633
+      }
+    },
+    {
+      "feature": "played_diff",
+      "delta_score": 0.00024392416373042458,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.0029696061703418097,
+      "delta_brier": 4.237113402061343e-05,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9101165882607488,
+        "brier": 0.534324237113402,
+        "score": 0.4604440992278
+      }
+    },
+    {
+      "feature": "home_fifa_rank",
+      "delta_score": 0.00011892728216522652,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.0013087173157241283,
+      "delta_brier": 9.486597938146435e-05,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9084556994061311,
+        "brier": 0.5343767319587629,
+        "score": 0.4605690961093652
+      }
+    },
+    {
+      "feature": "h2h_draw_rate_avg",
+      "delta_score": 0.00010941333789254992,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": 0.0009172607958214396,
+      "delta_brier": 0.0002402164948454022,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9080642428862284,
+        "brier": 0.5345220824742268,
+        "score": 0.46057861005363787
+      }
+    },
+    {
+      "feature": "squad_u23_share_diff",
+      "delta_score": -3.507515566103514e-05,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": -0.0005702693426699046,
+      "delta_brier": 7.030927835049994e-05,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9065767127477371,
+        "brier": 0.5343521752577319,
+        "score": 0.46072309854719146
+      }
+    },
+    {
+      "feature": "squad_prior_wc_apps_mean_pair_avg",
+      "delta_score": -0.00033099137765790765,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": -0.0013880816537136242,
+      "delta_brier": -0.0014662989690721329,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9057589004366934,
+        "brier": 0.5328155670103093,
+        "score": 0.46101901476918833
+      }
+    },
+    {
+      "feature": "all_h2h_draw_rate",
+      "delta_score": -0.0003891423683603512,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": -0.002469421357082613,
+      "delta_brier": -0.0012772577319587475,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9046775607333244,
+        "brier": 0.5330046082474227,
+        "score": 0.4610771657598908
+      }
+    },
+    {
+      "feature": "played_total",
+      "delta_score": -0.0005147135085910026,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": -0.004242662414089882,
+      "delta_brier": -0.0011686701030927393,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9029043196763171,
+        "brier": 0.5331131958762887,
+        "score": 0.4612027369001214
+      }
+    },
+    {
+      "feature": "home_squad_avg_age",
+      "delta_score": -0.004825669796141685,
+      "delta_accuracy": -0.005154639175257714,
+      "delta_log_loss": 0.0031116597647226074,
+      "delta_brier": 0.0005335773195876969,
+      "permuted": {
+        "accuracy": 0.6185567010309279,
+        "log_loss": 0.9102586418551296,
+        "brier": 0.5348154432989691,
+        "score": 0.4655136931876721
+      }
+    },
+    {
+      "feature": "h2h_win_rate_diff",
+      "delta_score": -0.0053675572049090015,
+      "delta_accuracy": -0.005154639175257714,
+      "delta_log_loss": -0.0016707021747656148,
+      "delta_brier": -0.0005284123711339905,
+      "permuted": {
+        "accuracy": 0.6185567010309279,
+        "log_loss": 0.9054762799156414,
+        "brier": 0.5337534536082474,
+        "score": 0.4660555805964394
+      }
+    },
+    {
+      "feature": "elo_rating_avg_pair_avg",
+      "delta_score": -0.0054871234704877425,
+      "delta_accuracy": -0.005154639175257714,
+      "delta_log_loss": -0.0023356026594485435,
+      "delta_brier": -0.0009709072164948429,
+      "permuted": {
+        "accuracy": 0.6185567010309279,
+        "log_loss": 0.9048113794309585,
+        "brier": 0.5333109587628866,
+        "score": 0.46617514686201816
+      }
+    },
+    {
+      "feature": "elo_rating_diff",
+      "delta_score": -0.0060077836404267,
+      "delta_accuracy": -0.005154639175257714,
+      "delta_log_loss": -0.005155420505335129,
+      "delta_brier": -0.0029380721649484576,
+      "permuted": {
+        "accuracy": 0.6185567010309279,
+        "log_loss": 0.9019915615850719,
+        "brier": 0.531343793814433,
+        "score": 0.4666958070319571
+      }
+    },
+    {
+      "feature": "squad_prior_wc_starts_mean_diff",
+      "delta_score": -0.00615911615193887,
+      "delta_accuracy": -0.005154639175257714,
+      "delta_log_loss": -0.006000053703360542,
+      "delta_brier": -0.0034964845360824226,
+      "permuted": {
+        "accuracy": 0.6185567010309279,
+        "log_loss": 0.9011469283870465,
+        "brier": 0.530785381443299,
+        "score": 0.4668471395434693
+      }
+    }
+  ],
+  "groups": [
+    {
+      "group": "squad",
+      "feature_count": 32,
+      "features": [
+        "home_squad_avg_age",
+        "away_squad_avg_age",
+        "squad_avg_age_diff",
+        "squad_avg_age_pair_avg",
+        "squad_age_std_diff",
+        "squad_age_std_pair_avg",
+        "squad_u23_share_diff",
+        "squad_u23_share_pair_avg",
+        "squad_peak_age_share_diff",
+        "squad_peak_age_share_pair_avg",
+        "squad_30plus_share_diff",
+        "squad_30plus_share_pair_avg",
+        "squad_gk_share_diff",
+        "squad_gk_share_pair_avg",
+        "squad_df_share_diff",
+        "squad_df_share_pair_avg",
+        "squad_mf_share_diff",
+        "squad_mf_share_pair_avg",
+        "squad_fw_share_diff",
+        "squad_fw_share_pair_avg",
+        "squad_prior_wc_squad_mean_diff",
+        "squad_prior_wc_squad_mean_pair_avg",
+        "squad_prior_wc_squad_share_diff",
+        "squad_prior_wc_squad_share_pair_avg",
+        "squad_prior_wc_apps_mean_diff",
+        "squad_prior_wc_apps_mean_pair_avg",
+        "squad_prior_wc_apps_share_diff",
+        "squad_prior_wc_apps_share_pair_avg",
+        "squad_prior_wc_starts_mean_diff",
+        "squad_prior_wc_starts_mean_pair_avg",
+        "squad_prior_wc_goals_mean_diff",
+        "squad_prior_wc_goals_mean_pair_avg"
+      ],
+      "delta_score": 0.10489634410553117,
+      "delta_accuracy": 0.08762886597938147,
+      "delta_log_loss": 0.09786998430882976,
+      "delta_brier": 0.06291919587628869,
+      "permuted": {
+        "accuracy": 0.5257731958762887,
+        "log_loss": 1.0050169663992368,
+        "brier": 0.5972010618556701,
+        "score": 0.35579167928599925
+      }
+    },
+    {
+      "group": "world_cup_history",
+      "feature_count": 16,
+      "features": [
+        "played_diff",
+        "played_total",
+        "experience_log_diff",
+        "experience_log_total",
+        "win_rate_diff",
+        "draw_rate_diff",
+        "loss_rate_diff",
+        "gf_avg_diff",
+        "ga_avg_diff",
+        "gd_avg_diff",
+        "gf_avg_pair_avg",
+        "ga_avg_pair_avg",
+        "gd_avg_pair_avg",
+        "h2h_played_total",
+        "h2h_win_rate_diff",
+        "h2h_draw_rate_avg"
+      ],
+      "delta_score": 0.09333136853098328,
+      "delta_accuracy": 0.07731958762886604,
+      "delta_log_loss": 0.08696723550326879,
+      "delta_brier": 0.06036268041237114,
+      "permuted": {
+        "accuracy": 0.5360824742268041,
+        "log_loss": 0.9941142175936758,
+        "brier": 0.5946445463917526,
+        "score": 0.36735665486054714
+      }
+    },
+    {
+      "group": "elo",
+      "feature_count": 13,
+      "features": [
+        "home_elo_rank",
+        "away_elo_rank",
+        "elo_rank_diff",
+        "elo_rank_pair_avg",
+        "home_elo_rating",
+        "away_elo_rating",
+        "elo_rating_diff",
+        "elo_rating_pair_avg",
+        "home_elo_rating_avg",
+        "away_elo_rating_avg",
+        "elo_rating_avg_diff",
+        "elo_rating_avg_pair_avg",
+        "elo_missing_any"
+      ],
+      "delta_score": 0.02602978923611826,
+      "delta_accuracy": 0.02577319587628868,
+      "delta_log_loss": 0.0023829968947768343,
+      "delta_brier": 0.0004396907216493995,
+      "permuted": {
+        "accuracy": 0.5876288659793815,
+        "log_loss": 0.9095299789851838,
+        "brier": 0.5347215567010308,
+        "score": 0.43465823415541216
+      }
+    },
+    {
+      "group": "era_year",
+      "feature_count": 2,
+      "features": [
+        "year_num",
+        "era_team_goal_rate"
+      ],
+      "delta_score": 0.021371137668447004,
+      "delta_accuracy": 0.020618556701030966,
+      "delta_log_loss": 0.003933615185482853,
+      "delta_brier": 0.0029192783505155306,
+      "permuted": {
+        "accuracy": 0.5927835051546392,
+        "log_loss": 0.9110805972758899,
+        "brier": 0.537201144329897,
+        "score": 0.4393168857230834
+      }
+    },
+    {
+      "group": "fifa",
+      "feature_count": 9,
+      "features": [
+        "home_fifa_rank",
+        "away_fifa_rank",
+        "fifa_rank_diff",
+        "fifa_rank_pair_avg",
+        "home_fifa_points",
+        "away_fifa_points",
+        "fifa_points_diff",
+        "fifa_points_pair_avg",
+        "fifa_missing_any"
+      ],
+      "delta_score": 0.006738355035434962,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.008520894128502654,
+      "delta_brier": 0.006013628865979337,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9156678762189097,
+        "brier": 0.5402954948453608,
+        "score": 0.45394966835609546
+      }
+    },
+    {
+      "group": "host",
+      "feature_count": 3,
+      "features": [
+        "home_host",
+        "away_host",
+        "host_diff"
+      ],
+      "delta_score": 0.005547291856371872,
+      "delta_accuracy": 0.005154639175257825,
+      "delta_log_loss": 0.0017180296479457624,
+      "delta_brier": 0.0017014020618556502,
+      "permuted": {
+        "accuracy": 0.6082474226804123,
+        "log_loss": 0.9088650117383528,
+        "brier": 0.5359832680412371,
+        "score": 0.45514073153515855
+      }
+    },
+    {
+      "group": "all_matches_recent",
+      "feature_count": 14,
+      "features": [
+        "all_recent_form_5_diff",
+        "all_recent_form_10_diff",
+        "all_recent_form_20_diff",
+        "all_recent_form_10_pair_avg",
+        "all_recent_form_weighted_diff",
+        "all_recent_gf_10_diff",
+        "all_recent_ga_10_diff",
+        "all_recent_gd_10_diff",
+        "all_recent_gd_weighted_diff",
+        "all_recent_competitive_form_diff",
+        "all_recent_friendly_form_diff",
+        "all_h2h_played",
+        "all_h2h_win_rate_diff",
+        "all_h2h_draw_rate"
+      ],
+      "delta_score": -0.00026895572577928517,
+      "delta_accuracy": 0.0,
+      "delta_log_loss": -0.0003112635825504029,
+      "delta_brier": -0.0016270309278350048,
+      "permuted": {
+        "accuracy": 0.6134020618556701,
+        "log_loss": 0.9068357185078566,
+        "brier": 0.5326548350515464,
+        "score": 0.4609569791173097
+      }
+    },
+    {
+      "group": "categorical_context",
+      "feature_count": 4,
+      "features": [
+        "stage_type",
+        "home_confederation",
+        "away_confederation",
+        "venue_country"
+      ],
+      "delta_score": -0.013690011745164765,
+      "delta_accuracy": -0.015463917525773141,
+      "delta_log_loss": 0.00875754004110929,
+      "delta_brier": 0.0071553505154638986,
+      "permuted": {
+        "accuracy": 0.6288659793814433,
+        "log_loss": 0.9159045221315163,
+        "brier": 0.5414372164948453,
+        "score": 0.4743780351366952
+      }
+    }
+  ],
+  "note": "Positive delta_score means performance worsened when permuted; negative means the feature/group may be noisy or redundant."
+}

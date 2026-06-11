@@ -1,0 +1,31 @@
+dataset_dir: Dataset
+artifact_dir: artifacts/v1
+report_dir: reports
+seed: 42
+split_test_size: 0.2
+simulation_runs: 1000
+epochs: 120
+early_stopping_patience: 12
+early_stopping_min_delta: 0.0005
+batch_size: 64
+learning_rate: 0.001
+lr_patience: 4
+lr_factor: 0.5
+min_learning_rate: 0.00001
+weight_decay: 0.0001
+dropout: 0.15
+hidden_sizes: [192, 128, 64]
+embedding_dim: 8
+goal_loss_weight: 1.0
+class_loss_weight: 0.25
+calibration_loss_weight: 0.05
+era_goal_scaling: true
+recency_half_life_tournaments: 6.0
+home_away_swap_augmentation: false
+include_external_matches: true
+external_match_start_year: 2010
+external_match_max_rows: 4000
+external_match_base_weight: 0.05
+external_match_recency_half_life_years: 8.0
+seeds: [11, 23, 37]
+optuna_trials: 0

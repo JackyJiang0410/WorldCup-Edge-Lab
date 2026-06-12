@@ -31,6 +31,10 @@ class TrainConfig:
     goal_loss_weight: float = 1.0
     class_loss_weight: float = 0.25
     calibration_loss_weight: float = 0.05
+    result_probability_source: str = "exact_score"
+    class_probability_blend_weight: float = 0.5
+    exact_score_max_goals: int = 15
+    temperature_calibration: bool = True
     era_goal_scaling: bool = True
     recency_half_life_tournaments: float = 6.0
     home_away_swap_augmentation: bool = False
@@ -41,6 +45,12 @@ class TrainConfig:
     external_match_recency_half_life_years: float = 8.0
     seeds: list[int] = field(default_factory=lambda: [11, 23, 37])
     optuna_trials: int = 8
+    pre_match_edge_threshold: float = 0.03
+    kelly_fraction: float = 0.25
+    pre_match_phase_cap: float = 0.02
+    match_cap: float = 0.04
+    team_cap: float = 0.06
+    total_open_cap: float = 0.20
 
     def to_dict(self) -> dict[str, Any]:
         raw = asdict(self)

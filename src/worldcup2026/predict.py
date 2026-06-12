@@ -5,10 +5,16 @@ from pathlib import Path
 
 import torch
 
+from .config import TrainConfig
 from .features import FeatureSchema, build_2026_match_features, transform_features
 from .simulation import SimulationResult, relative_counts, simulate_scoreline
 from .team_names import normalize_team_name
-from .training import load_model_from_artifact
+from .training import (
+    _probabilities_by_source,
+    _selected_probabilities,
+    _temperature_scale,
+    load_model_from_artifact,
+)
 
 
 @dataclass(slots=True)
@@ -18,6 +24,8 @@ class MatchPrediction:
     requested_team: str
     requested_team_is_home: bool
     class_probabilities: dict[str, float]
+    result_probabilities: dict[str, float]
+    result_probability_source: str
     expected_goals: dict[str, float]
     simulation: SimulationResult
     relative_simulation_counts: dict[str, int]
@@ -25,14 +33,15 @@ class MatchPrediction:
     @property
     def requested_team_win_probability(self) -> float:
         if self.requested_team_is_home:
-            return self.simulation.frequencies["home_win"]
-        return self.simulation.frequencies["away_win"]
+            return self.result_probabilities["home_win"]
+        return self.result_probabilities["away_win"]
 
     @property
     def relative_predicted_result(self) -> str:
-        if self.simulation.predicted_result == "draw":
+        predicted_result = max(self.result_probabilities, key=self.result_probabilities.get)
+        if predicted_result == "draw":
             return "draw"
-        if self.simulation.predicted_result == "home_win":
+        if predicted_result == "home_win":
             return "team_win" if self.requested_team_is_home else "opponent_win"
         return "opponent_win" if self.requested_team_is_home else "team_win"
 
@@ -63,6 +72,21 @@ def predict_2026_match(
         if artifact.get("goal_output") == "era_scaled_multipliers":
             goal_scale = float(row.iloc[0]["era_team_goal_rate"])
             goals = goals * goal_scale
+    train_config = TrainConfig(
+        **{k: v for k, v in artifact.get("train_config", {}).items() if k in TrainConfig.__dataclass_fields__}
+    )
+    sources = _probabilities_by_source(
+        probs.reshape(1, -1),
+        goals.reshape(1, -1),
+        config=train_config,
+    )
+    probability_source = artifact.get("result_probability_source", train_config.result_probability_source)
+    result_probs = _selected_probabilities(sources, probability_source)[0]
+    if artifact.get("selected_temperature") is not None:
+        result_probs = _temperature_scale(
+            result_probs.reshape(1, -1),
+            float(artifact["selected_temperature"]),
+        )[0]
 
     simulation = simulate_scoreline(
         float(goals[0]), float(goals[1]), runs=simulation_runs, seed=seed
@@ -85,6 +109,12 @@ def predict_2026_match(
             "draw": float(probs[1]),
             "away_win": float(probs[2]),
         },
+        result_probabilities={
+            "home_win": float(result_probs[0]),
+            "draw": float(result_probs[1]),
+            "away_win": float(result_probs[2]),
+        },
+        result_probability_source=str(probability_source),
         expected_goals={"home": float(goals[0]), "away": float(goals[1])},
         simulation=simulation,
         relative_simulation_counts=relative_counts(

@@ -37,3 +37,23 @@ def test_kelly_stake_respects_caps():
     assert contracts == 16
     assert limits["phase_cap"] == 10.0
 
+
+def test_kelly_stake_uses_editable_caps():
+    stake, contracts, limits = _stake_size(
+        bankroll=500,
+        p_model=0.66,
+        q_eff=0.612,
+        kelly_fraction=0.50,
+        pre_match_phase_cap=0.08,
+        match_cap=0.10,
+        team_cap=0.12,
+        total_open_cap=0.30,
+        phase_exposure=0,
+        match_exposure=0,
+        team_exposure=0,
+        total_open_exposure=0,
+        liquidity_cap=100,
+    )
+    assert stake == 30.93
+    assert contracts == 50
+    assert limits["phase_cap"] == 40.0

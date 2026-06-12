@@ -20,6 +20,11 @@ def _stake_size(
     bankroll: float,
     p_model: float,
     q_eff: float,
+    kelly_fraction: float = 0.25,
+    pre_match_phase_cap: float = PRE_MATCH_PHASE_CAP,
+    match_cap: float = MATCH_CAP,
+    team_cap: float = TEAM_CAP,
+    total_open_cap: float = TOTAL_OPEN_CAP,
     phase_exposure: float,
     match_exposure: float,
     team_exposure: float,
@@ -29,13 +34,13 @@ def _stake_size(
     if q_eff >= 1.0 or p_model <= q_eff:
         return 0.0, 0, {}
     full_kelly = (p_model - q_eff) / (1.0 - q_eff)
-    fractional_kelly = max(0.0, 0.25 * full_kelly)
+    fractional_kelly = max(0.0, kelly_fraction * full_kelly)
     limits = {
         "kelly": bankroll * fractional_kelly,
-        "phase_cap": max(0.0, bankroll * PRE_MATCH_PHASE_CAP - phase_exposure),
-        "match_cap": max(0.0, bankroll * MATCH_CAP - match_exposure),
-        "team_cap": max(0.0, bankroll * TEAM_CAP - team_exposure),
-        "total_open_cap": max(0.0, bankroll * TOTAL_OPEN_CAP - total_open_exposure),
+        "phase_cap": max(0.0, bankroll * pre_match_phase_cap - phase_exposure),
+        "match_cap": max(0.0, bankroll * match_cap - match_exposure),
+        "team_cap": max(0.0, bankroll * team_cap - team_exposure),
+        "total_open_cap": max(0.0, bankroll * total_open_cap - total_open_exposure),
         "liquidity_cap": max(0.0, liquidity_cap),
     }
     stake = min(limits.values())
@@ -50,7 +55,9 @@ def recommend_trade(
     dataset_dir: str | Path,
     simulation_runs: int = 1000,
     seed: int = 42,
+    config: TrainConfig | None = None,
 ) -> Recommendation:
+    threshold = config.pre_match_edge_threshold if config else PRE_MATCH_THRESHOLD
     if is_prohibited_trade_team(snapshot.team) or is_prohibited_trade_team(snapshot.opponent):
         return Recommendation(
             decision="no_trade",
@@ -60,7 +67,7 @@ def recommend_trade(
             q_market=snapshot.q_market,
             q_eff=min(1.0, snapshot.q_market + snapshot.fee_estimate),
             edge=0.0,
-            threshold=PRE_MATCH_THRESHOLD,
+            threshold=threshold,
             stake_usd=0.0,
             contracts=0,
             reason="match involves Argentina or Spain",
@@ -80,7 +87,7 @@ def recommend_trade(
     q_eff = min(1.0, snapshot.q_market + snapshot.fee_estimate)
     edge = p_model - q_eff
 
-    if edge <= PRE_MATCH_THRESHOLD:
+    if edge <= threshold:
         return Recommendation(
             decision="no_trade",
             predicted_result=prediction.relative_predicted_result,
@@ -89,7 +96,7 @@ def recommend_trade(
             q_market=snapshot.q_market,
             q_eff=round(float(q_eff), 6),
             edge=round(float(edge), 6),
-            threshold=PRE_MATCH_THRESHOLD,
+            threshold=threshold,
             stake_usd=0.0,
             contracts=0,
             reason="edge does not clear pre-match threshold",
@@ -99,6 +106,11 @@ def recommend_trade(
         bankroll=snapshot.bankroll,
         p_model=p_model,
         q_eff=q_eff,
+        kelly_fraction=config.kelly_fraction if config else 0.25,
+        pre_match_phase_cap=config.pre_match_phase_cap if config else PRE_MATCH_PHASE_CAP,
+        match_cap=config.match_cap if config else MATCH_CAP,
+        team_cap=config.team_cap if config else TEAM_CAP,
+        total_open_cap=config.total_open_cap if config else TOTAL_OPEN_CAP,
         phase_exposure=0.0,
         match_exposure=snapshot.match_exposure,
         team_exposure=snapshot.team_exposure,
@@ -114,7 +126,7 @@ def recommend_trade(
             q_market=snapshot.q_market,
             q_eff=round(float(q_eff), 6),
             edge=round(float(edge), 6),
-            threshold=PRE_MATCH_THRESHOLD,
+            threshold=threshold,
             stake_usd=0.0,
             contracts=0,
             reason="stake is too small after Kelly and exposure caps",
@@ -128,7 +140,7 @@ def recommend_trade(
         q_market=snapshot.q_market,
         q_eff=round(float(q_eff), 6),
         edge=round(float(edge), 6),
-        threshold=PRE_MATCH_THRESHOLD,
+        threshold=threshold,
         stake_usd=stake,
         contracts=contracts,
         reason="edge clears threshold and exposure caps",
@@ -151,5 +163,5 @@ def recommend_from_dict(
         dataset_dir=dataset_dir,
         simulation_runs=simulation_runs,
         seed=seed,
+        config=config,
     )
-

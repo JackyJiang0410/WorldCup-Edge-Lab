@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import random
+import sys
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
@@ -39,6 +40,31 @@ def _device() -> torch.device:
     if torch.cuda.is_available():
         return torch.device("cuda")
     return torch.device("cpu")
+
+
+def _device_name(device: torch.device) -> str:
+    if device.type == "cuda":
+        return torch.cuda.get_device_name(device)
+    if device.type == "mps":
+        return "Apple Metal"
+    return "CPU"
+
+
+def _progress_bar(current: int, total: int, *, width: int = 28) -> str:
+    if total <= 0:
+        return "[" + ("-" * width) + "]"
+    filled = int(round(width * min(current, total) / total))
+    return "[" + ("#" * filled) + ("-" * (width - filled)) + "]"
+
+
+def _write_progress(
+    message: str,
+    *,
+    end: str = "\n",
+    stream=sys.stderr,
+) -> None:
+    stream.write(message + end)
+    stream.flush()
 
 
 def _goal_scales(df, *, era_goal_scaling: bool) -> np.ndarray:
@@ -131,6 +157,63 @@ def simulation_probabilities(
     ).T
 
 
+def exact_scoreline_probabilities(expected_goals: np.ndarray, *, max_goals: int = 15) -> np.ndarray:
+    max_goals = max(3, int(max_goals))
+    goal_values = np.arange(max_goals + 1)
+    home_lam = np.clip(expected_goals[:, 0], 0.03, 8.0).astype(np.float64)
+    away_lam = np.clip(expected_goals[:, 1], 0.03, 8.0).astype(np.float64)
+
+    home_pmf = np.empty((len(expected_goals), max_goals + 1), dtype=np.float64)
+    away_pmf = np.empty((len(expected_goals), max_goals + 1), dtype=np.float64)
+    home_pmf[:, 0] = np.exp(-home_lam)
+    away_pmf[:, 0] = np.exp(-away_lam)
+    for goals in range(1, max_goals + 1):
+        home_pmf[:, goals] = home_pmf[:, goals - 1] * home_lam / goals
+        away_pmf[:, goals] = away_pmf[:, goals - 1] * away_lam / goals
+
+    score_matrix = home_pmf[:, :, None] * away_pmf[:, None, :]
+    home_win = score_matrix[:, goal_values[:, None] > goal_values[None, :]].sum(axis=1)
+    draw = score_matrix[:, goal_values[:, None] == goal_values[None, :]].sum(axis=1)
+    away_win = score_matrix[:, goal_values[:, None] < goal_values[None, :]].sum(axis=1)
+    probs = np.vstack([home_win, draw, away_win]).T
+    return probs / np.clip(probs.sum(axis=1, keepdims=True), 1e-8, None)
+
+
+def _blend_probabilities(
+    score_probs: np.ndarray, class_probs: np.ndarray, *, class_weight: float
+) -> np.ndarray:
+    weight = float(np.clip(class_weight, 0.0, 1.0))
+    probs = (1.0 - weight) * score_probs + weight * class_probs
+    return probs / np.clip(probs.sum(axis=1, keepdims=True), 1e-8, None)
+
+
+def _probabilities_by_source(
+    class_probs: np.ndarray,
+    expected_goals: np.ndarray,
+    *,
+    config: TrainConfig,
+) -> dict[str, np.ndarray]:
+    exact_probs = exact_scoreline_probabilities(
+        expected_goals, max_goals=config.exact_score_max_goals
+    )
+    return {
+        "exact_score": exact_probs,
+        "direct_class": class_probs,
+        "blend": _blend_probabilities(
+            exact_probs,
+            class_probs,
+            class_weight=config.class_probability_blend_weight,
+        ),
+    }
+
+
+def _selected_probabilities(sources: dict[str, np.ndarray], source: str) -> np.ndarray:
+    if source not in sources:
+        allowed = ", ".join(sorted(sources))
+        raise ValueError(f"Unknown result_probability_source {source!r}; expected one of: {allowed}")
+    return sources[source]
+
+
 def simulation_metrics(
     expected_goals: np.ndarray, labels: np.ndarray, *, runs: int, seed: int
 ) -> dict[str, float]:
@@ -159,8 +242,115 @@ def calibration_table(probs: np.ndarray, labels: np.ndarray, bins: int = 10) -> 
     return table
 
 
+def per_class_calibration_table(
+    probs: np.ndarray, labels: np.ndarray, bins: int = 10
+) -> dict[str, list[dict[str, float]]]:
+    names = ("home_win", "draw", "away_win")
+    table: dict[str, list[dict[str, float]]] = {}
+    for class_idx, name in enumerate(names):
+        class_probs = probs[:, class_idx]
+        observed = (labels == class_idx).astype(float)
+        rows: list[dict[str, float]] = []
+        for idx in range(bins):
+            low = idx / bins
+            high = (idx + 1) / bins
+            mask = (class_probs >= low) & (
+                class_probs < high if idx < bins - 1 else class_probs <= high
+            )
+            if not mask.any():
+                continue
+            rows.append(
+                {
+                    "bin_low": low,
+                    "bin_high": high,
+                    "count": int(mask.sum()),
+                    "avg_probability": float(class_probs[mask].mean()),
+                    "observed_rate": float(observed[mask].mean()),
+                }
+            )
+        table[name] = rows
+    return table
+
+
+def draw_diagnostics(probs: np.ndarray, labels: np.ndarray) -> dict[str, float]:
+    draw_mask = labels == 1
+    return {
+        "actual_draw_rate": float(draw_mask.mean()),
+        "avg_predicted_draw_probability": float(probs[:, 1].mean()),
+        "draw_brier": float(np.mean((probs[:, 1] - draw_mask.astype(float)) ** 2)),
+        "draw_log_loss": float(-np.mean(np.log(np.clip(probs[draw_mask, 1], 1e-8, 1.0))))
+        if draw_mask.any()
+        else 0.0,
+    }
+
+
 def composite_score(metrics: dict[str, float]) -> float:
-    return metrics["accuracy"] - 0.08 * metrics["log_loss"] - 0.15 * metrics["brier"]
+    return -metrics["log_loss"] - 0.75 * metrics["brier"]
+
+
+def _temperature_scale(probs: np.ndarray, temperature: float) -> np.ndarray:
+    temperature = max(float(temperature), 1e-3)
+    scaled = np.power(np.clip(probs, 1e-8, 1.0), 1.0 / temperature)
+    return scaled / np.clip(scaled.sum(axis=1, keepdims=True), 1e-8, None)
+
+
+def _fit_temperature(probs: np.ndarray, labels: np.ndarray) -> float:
+    candidates = np.concatenate(
+        [
+            np.linspace(0.55, 1.45, 19),
+            np.linspace(1.5, 3.0, 16),
+        ]
+    )
+    best_temperature = 1.0
+    best_log_loss = float("inf")
+    for temperature in candidates:
+        metrics = classification_metrics(_temperature_scale(probs, float(temperature)), labels)
+        if metrics["log_loss"] < best_log_loss:
+            best_log_loss = metrics["log_loss"]
+            best_temperature = float(temperature)
+    return best_temperature
+
+
+def _source_metrics(
+    sources: dict[str, np.ndarray],
+    labels: np.ndarray,
+    *,
+    train_sources: dict[str, np.ndarray] | None = None,
+    train_labels: np.ndarray | None = None,
+    temperature_calibration: bool,
+) -> dict[str, Any]:
+    metrics: dict[str, Any] = {}
+    for name, probs in sources.items():
+        raw_metrics = classification_metrics(probs, labels)
+        metrics[name] = {
+            **raw_metrics,
+            "score": composite_score(raw_metrics),
+            "draw": draw_diagnostics(probs, labels),
+        }
+        if temperature_calibration and train_sources is not None and train_labels is not None:
+            temperature = _fit_temperature(train_sources[name], train_labels)
+            calibrated = _temperature_scale(probs, temperature)
+            calibrated_metrics = classification_metrics(calibrated, labels)
+            metrics[name]["temperature"] = temperature
+            metrics[name]["calibrated"] = {
+                **calibrated_metrics,
+                "score": composite_score(calibrated_metrics),
+                "draw": draw_diagnostics(calibrated, labels),
+            }
+    return metrics
+
+
+def _maybe_calibrated_selected(
+    probs: np.ndarray,
+    *,
+    train_probs: np.ndarray,
+    train_labels: np.ndarray,
+    temperature_calibration: bool,
+) -> tuple[np.ndarray, float]:
+    if not temperature_calibration:
+        return probs, 1.0
+    temperature = _fit_temperature(train_probs, train_labels)
+    return _temperature_scale(probs, temperature), temperature
 
 
 def _train_once(
@@ -180,6 +370,8 @@ def _train_once(
     *,
     seed: int,
     epochs: int | None = None,
+    run_label: str | None = None,
+    show_progress: bool = False,
 ) -> tuple[TabularMultiTaskNet, dict[str, Any]]:
     set_seed(seed)
     device = _device()
@@ -211,6 +403,11 @@ def _train_once(
     best_epoch = 0
     epochs_without_improvement = 0
     stopped_epoch = run_epochs
+    progress_stream = sys.stderr
+    progress_is_tty = progress_stream.isatty()
+
+    if show_progress and run_label is not None:
+        _write_progress(f"{run_label}: seed={seed}, device={device.type} ({_device_name(device)})")
 
     for epoch in range(run_epochs):
         model.train()
@@ -248,8 +445,14 @@ def _train_once(
             batch_size=config.batch_size,
             device=device,
         )
-        metrics = simulation_metrics(
-            expected_goals, test_labels, runs=config.simulation_runs, seed=config.seed
+        sources = _probabilities_by_source(
+            class_probs,
+            expected_goals,
+            config=config,
+        )
+        metrics = classification_metrics(
+            _selected_probabilities(sources, config.result_probability_source),
+            test_labels,
         )
         score = composite_score(metrics)
         scheduler.step(score)
@@ -270,10 +473,26 @@ def _train_once(
                     "epoch": float(epoch + 1),
                     "loss": float(np.mean(losses)),
                     "learning_rate": float(optimizer.param_groups[0]["lr"]),
-                    **{f"simulation_{key}": value for key, value in metrics.items()},
+                    **{f"selected_{key}": value for key, value in metrics.items()},
                     **{f"aux_class_{key}": value for key, value in aux_metrics.items()},
                 }
             )
+
+        if show_progress and run_label is not None:
+            progress_message = (
+                f"{run_label} "
+                f"{_progress_bar(epoch + 1, run_epochs)} "
+                f"epoch {epoch + 1}/{run_epochs} "
+                f"loss={float(np.mean(losses)):.4f} "
+                f"score={score:.4f} "
+                f"best={best_score:.4f} "
+                f"lr={float(optimizer.param_groups[0]['lr']):.2g} "
+                f"patience={epochs_without_improvement}/{config.early_stopping_patience}"
+            )
+            if progress_is_tty:
+                _write_progress("\r" + progress_message, end="")
+            elif epoch == 0 or (epoch + 1) % 10 == 0 or epoch == run_epochs - 1:
+                _write_progress(progress_message)
 
         if (
             config.early_stopping_patience > 0
@@ -281,6 +500,9 @@ def _train_once(
         ):
             stopped_epoch = epoch + 1
             break
+
+    if show_progress and run_label is not None and progress_is_tty:
+        _write_progress("")
 
     if best_state is not None:
         model.load_state_dict(best_state)
@@ -307,21 +529,57 @@ def _train_once(
     train_sim_probs = simulation_probabilities(
         train_expected_goals, runs=config.simulation_runs, seed=config.seed
     )
-    test_metrics = classification_metrics(test_sim_probs, test_labels)
-    train_metrics = classification_metrics(train_sim_probs, train_labels)
+    test_sources = _probabilities_by_source(
+        test_class_probs,
+        test_expected_goals,
+        config=config,
+    )
+    train_sources = _probabilities_by_source(
+        train_class_probs,
+        train_expected_goals,
+        config=config,
+    )
+    test_selected_raw = _selected_probabilities(test_sources, config.result_probability_source)
+    train_selected_raw = _selected_probabilities(train_sources, config.result_probability_source)
+    test_selected, selected_temperature = _maybe_calibrated_selected(
+        test_selected_raw,
+        train_probs=train_selected_raw,
+        train_labels=train_labels,
+        temperature_calibration=config.temperature_calibration,
+    )
+    train_selected = (
+        _temperature_scale(train_selected_raw, selected_temperature)
+        if config.temperature_calibration
+        else train_selected_raw
+    )
+    test_metrics = classification_metrics(test_selected, test_labels)
+    train_metrics = classification_metrics(train_selected, train_labels)
     metrics: dict[str, Any] = {
         "seed": seed,
+        "result_probability_source": config.result_probability_source,
+        "selected_temperature": selected_temperature,
         "train": train_metrics,
         "test": test_metrics,
+        "probability_sources": _source_metrics(
+            test_sources,
+            test_labels,
+            train_sources=train_sources,
+            train_labels=train_labels,
+            temperature_calibration=config.temperature_calibration,
+        ),
         "aux_class_train": classification_metrics(train_class_probs, train_labels),
         "aux_class_test": classification_metrics(test_class_probs, test_labels),
         "score": composite_score(test_metrics),
         "best_epoch": best_epoch,
         "stopped_epoch": stopped_epoch,
         "history": history,
-        "calibration": calibration_table(test_sim_probs, test_labels),
+        "calibration": calibration_table(test_selected, test_labels),
+        "per_class_calibration": per_class_calibration_table(test_selected, test_labels),
+        "draw": draw_diagnostics(test_selected, test_labels),
         "aux_class_calibration": calibration_table(test_class_probs, test_labels),
         "test_goal_mae": float(np.mean(np.abs(test_expected_goals - test_goals))),
+        "monte_carlo_simulation_test": classification_metrics(test_sim_probs, test_labels),
+        "monte_carlo_simulation_train": classification_metrics(train_sim_probs, train_labels),
     }
     return model, metrics
 
@@ -492,7 +750,16 @@ def train_pipeline(config: TrainConfig) -> dict[str, Any]:
 
     best_model: TabularMultiTaskNet | None = None
     all_metrics: list[dict[str, Any]] = []
-    for seed in config.seeds:
+    device = _device()
+    _write_progress(
+        "Training on "
+        f"{device.type} ({_device_name(device)}); "
+        f"world_cup_train={len(train_idx)}, "
+        f"external={len(external_frame)}, "
+        f"total={len(train_frame)}, "
+        f"seeds={config.seeds}"
+    )
+    for seed_index, seed in enumerate(config.seeds, start=1):
         model, metrics = _train_once(
             final_train_config,
             model_config,
@@ -508,8 +775,19 @@ def train_pipeline(config: TrainConfig) -> dict[str, Any]:
             test_goals,
             test_goal_scales,
             seed=seed,
+            run_label=f"seed {seed_index}/{len(config.seeds)}",
+            show_progress=True,
         )
         all_metrics.append(metrics)
+        _write_progress(
+            f"seed {seed_index}/{len(config.seeds)} complete: "
+            f"best_epoch={metrics['best_epoch']}, "
+            f"stopped_epoch={metrics['stopped_epoch']}, "
+            f"test_accuracy={metrics['test']['accuracy']:.4f}, "
+            f"log_loss={metrics['test']['log_loss']:.4f}, "
+            f"brier={metrics['test']['brier']:.4f}, "
+            f"score={metrics['score']:.4f}"
+        )
         if best_model is None or metrics["score"] > max(item["score"] for item in all_metrics[:-1]):
             best_model = model
 
@@ -523,6 +801,8 @@ def train_pipeline(config: TrainConfig) -> dict[str, Any]:
         "goal_output": "era_scaled_multipliers"
         if final_train_config.era_goal_scaling
         else "raw_expected_goals",
+        "result_probability_source": final_train_config.result_probability_source,
+        "selected_temperature": best_metrics["selected_temperature"],
         "metrics": {"best": best_metrics, "runs": all_metrics},
         "split": {"train_idx": train_idx.tolist(), "test_idx": test_idx.tolist()},
         "training_rows": {
@@ -592,9 +872,24 @@ def evaluate_artifact(model_path: str | Path) -> dict[str, Any]:
         device=torch.device("cpu"),
     )
     sim_probs = simulation_probabilities(expected_goals, runs=config.simulation_runs, seed=config.seed)
+    sources = _probabilities_by_source(class_probs, expected_goals, config=config)
+    selected = _selected_probabilities(
+        sources,
+        artifact.get("result_probability_source", config.result_probability_source),
+    )
+    if artifact.get("selected_temperature") is not None:
+        selected = _temperature_scale(selected, float(artifact["selected_temperature"]))
     return {
-        "test": classification_metrics(sim_probs, labels),
+        "test": classification_metrics(selected, labels),
+        "probability_sources": _source_metrics(
+            sources,
+            labels,
+            temperature_calibration=False,
+        ),
         "aux_class_test": classification_metrics(class_probs, labels),
-        "calibration": calibration_table(sim_probs, labels),
+        "calibration": calibration_table(selected, labels),
+        "per_class_calibration": per_class_calibration_table(selected, labels),
+        "draw": draw_diagnostics(selected, labels),
         "test_goal_mae": float(np.mean(np.abs(expected_goals - goals))),
+        "monte_carlo_simulation_test": classification_metrics(sim_probs, labels),
     }

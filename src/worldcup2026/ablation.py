@@ -20,18 +20,43 @@ def _ablation_variants(config: TrainConfig) -> dict[str, dict[str, Any]]:
         config.calibration_loss_weight if config.calibration_loss_weight > 0 else 0.05
     )
     all_on = {
-        "home_away_swap_augmentation": True,
+        "home_away_swap_augmentation": False,
         "recency_half_life_tournaments": recency_half_life,
         "era_goal_scaling": True,
-        "class_loss_weight": class_loss_weight,
-        "calibration_loss_weight": calibration_loss_weight,
+        "goal_loss_weight": config.goal_loss_weight,
+        "class_loss_weight": max(class_loss_weight, 1.0),
+        "calibration_loss_weight": max(calibration_loss_weight, 0.15),
+        "result_probability_source": config.result_probability_source,
+        "class_probability_blend_weight": config.class_probability_blend_weight,
+        "temperature_calibration": config.temperature_calibration,
+        "hidden_sizes": config.hidden_sizes,
+        "dropout": config.dropout,
+        "include_external_matches": config.include_external_matches,
+        "external_match_base_weight": config.external_match_base_weight,
     }
     return {
         "baseline": all_on,
-        "no_swap": {**all_on, "home_away_swap_augmentation": False},
+        "exact_score": {**all_on, "result_probability_source": "exact_score"},
+        "direct_class": {**all_on, "result_probability_source": "direct_class"},
+        "blend": {**all_on, "result_probability_source": "blend"},
         "no_recency": {**all_on, "recency_half_life_tournaments": 0.0},
         "no_era_scaling": {**all_on, "era_goal_scaling": False},
-        "no_aux_class": {**all_on, "class_loss_weight": 0.0, "calibration_loss_weight": 0.0},
+        "external_w001": {
+            **all_on,
+            "include_external_matches": True,
+            "external_match_base_weight": 0.01,
+        },
+        "external_w003": {
+            **all_on,
+            "include_external_matches": True,
+            "external_match_base_weight": 0.03,
+        },
+        "no_external": {**all_on, "include_external_matches": False},
+        "large_model": {
+            **all_on,
+            "hidden_sizes": [192, 128, 64],
+            "dropout": 0.15,
+        },
     }
 
 
@@ -58,8 +83,16 @@ def _compact_result(name: str, config: TrainConfig, result: dict[str, Any]) -> d
             "home_away_swap_augmentation": config.home_away_swap_augmentation,
             "recency_half_life_tournaments": config.recency_half_life_tournaments,
             "era_goal_scaling": config.era_goal_scaling,
+            "goal_loss_weight": config.goal_loss_weight,
             "class_loss_weight": config.class_loss_weight,
             "calibration_loss_weight": config.calibration_loss_weight,
+            "result_probability_source": config.result_probability_source,
+            "class_probability_blend_weight": config.class_probability_blend_weight,
+            "temperature_calibration": config.temperature_calibration,
+            "hidden_sizes": config.hidden_sizes,
+            "dropout": config.dropout,
+            "include_external_matches": config.include_external_matches,
+            "external_match_base_weight": config.external_match_base_weight,
             "optuna_trials": config.optuna_trials,
         },
         "best": {
@@ -68,6 +101,8 @@ def _compact_result(name: str, config: TrainConfig, result: dict[str, Any]) -> d
             "stopped_epoch": best["stopped_epoch"],
             "score": best["score"],
             "test": best["test"],
+            "draw": best.get("draw", {}),
+            "probability_sources": best.get("probability_sources", {}),
             "aux_class_test": best["aux_class_test"],
             "test_goal_mae": best["test_goal_mae"],
         },
@@ -83,8 +118,8 @@ def run_ablation_pipeline(config: TrainConfig) -> dict[str, Any]:
 
     ranked = sorted(results, key=lambda item: item["best"]["score"], reverse=True)
     report = {
-        "selection_metric": "accuracy - 0.08 * log_loss - 0.15 * brier",
-        "note": "Ablations disable Optuna to isolate each switch under the same base config.",
+        "selection_metric": "-log_loss - 0.75 * brier",
+        "note": "Ablations skip simple non-neural baselines and compare neural probability sources, calibration, external weighting, and regularization.",
         "best_variant": ranked[0]["name"],
         "ranked": ranked,
         "results": results,

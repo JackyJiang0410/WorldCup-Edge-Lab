@@ -10,7 +10,7 @@ This repository is for research, backtesting, and decision support. It is not an
 - Uses FIFA ranking and Elo rating snapshots with as-of joins.
 - Adds broader international match history from `all_matches.csv` for recent-form features and low-weight external training rows.
 - Trains a PyTorch tabular expected-goals model with an auxiliary outcome head.
-- Simulates each match 1,000 times from predicted expected goals.
+- Converts predicted expected goals to exact Poisson result probabilities and also reports direct W/D/L classifier probabilities.
 - Evaluates accuracy, log loss, Brier score, calibration, and feature importance.
 - Produces deterministic `team_regulation_win` market recommendations from a JSON snapshot.
 
@@ -23,6 +23,7 @@ src/worldcup2026/         package source
 tests/                    data, feature, simulation, and trading tests
 artifacts/                trained model artifacts
 reports/                  metrics and feature-importance outputs
+trading_ledger/           prediction, recommendation, bet, settlement, and PnL logs
 pyproject.toml            package and dependency metadata
 ```
 
@@ -94,6 +95,21 @@ worldcup2026 recommend --model artifacts/v1/model.ckpt --snapshot market_snapsho
 
 The recommendation output includes the decision, simulated result counts, model probability, effective market price, edge, threshold, stake, contracts, and reason.
 
+Sizing and risk limits are configurable in `configs/v1.yaml`:
+
+```yaml
+pre_match_edge_threshold: 0.03
+kelly_fraction: 0.25
+pre_match_phase_cap: 0.02
+match_cap: 0.04
+team_cap: 0.06
+total_open_cap: 0.20
+```
+
+Caps are fractions of bankroll. For example, with a `$500` bankroll,
+`pre_match_phase_cap: 0.05` allows up to `$25` in pre-match exposure before
+Kelly, match/team caps, total-open caps, and liquidity are applied.
+
 ## Current V1 Scope
 
 V1 supports:
@@ -123,6 +139,7 @@ Important modeling rules:
 - Rating time series are joined by latest rating date on or before the match date.
 - Manager-derived features are intentionally excluded from V1 model input.
 - Matches involving Argentina or Spain are kept in simulations but excluded from trade recommendations by default.
+- Match-level result evaluation compares exact score-derived probabilities, direct classifier probabilities, and a configurable blend. Monte Carlo simulation remains useful for tournament futures.
 
 ## Current Model Inputs
 

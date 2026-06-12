@@ -1,0 +1,3 @@
+match_number,match_file,date,group,match,side_evaluated,q_market,fee_estimate,q_eff,p_model,edge,threshold,decision,recommended_bet,stake_usd,contracts,final_score,realized_pnl_usd,running_average_pnl_usd,notes
+1,match_001_mexico_vs_south_africa.md,11/06/2026 19:00,Group A,Mexico vs South Africa,Mexico YES,0.72,0.01,0.73,0.775602,0.045602,0.03,buy_yes,Mexico YES,71.94,98,Mexico won,26.06,26.06,Actual trade: bought 98 MEX YES at 72c; payout 98.00.
+2,match_002_korea_republic_vs_czechia.md,12/06/2026 02:00,Group A,South Korea vs Czech Republic,South Korea YES,0.37,0.01,0.38,0.352933,-0.027067,0.03,no_trade,KOR YES midgame plus Tie hedge,175.61,245,Korea Republic won,-8.42,8.82,Actual trades: bought/sold 83 Tie for -23.03; bought 162 KOR YES at 89c and won 14.61.
